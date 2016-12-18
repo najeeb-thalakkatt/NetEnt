@@ -11,10 +11,12 @@ from book_app.utils.messages import ERROR_RESP, NOT_SUPER_USER_ERROR
 
 
 class GenreView(APIView):
+
     """
     This view will handle all genre related REST services.
     """
-    # Basic Django authentication, you have to pass username nad password to access this api.
+    # Basic Django authentication, you have to pass username nad password to
+    # access this api.
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated,)
 
@@ -37,7 +39,8 @@ class GenreView(APIView):
                 if not Genre.objects.filter(genre_str=genre):
                     new_genre = Genre(genre_str=genre)
                     new_genre.save()
-                    genre_resp.append({"genre": new_genre.genre_str, "genre_id": new_genre.id})
+                    genre_resp.append(
+                        {"genre": new_genre.genre_str, "genre_id": new_genre.id})
                 else:
                     duplicates.append(genre)
             resp['genre_details'] = genre_resp

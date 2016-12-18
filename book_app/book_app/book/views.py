@@ -13,10 +13,12 @@ from book_app.utils.messages import ERROR_RESP, USER_QUOTA_EXCEEDED, USER_NOT_AU
 
 
 class BooksView(APIView):
+
     """
     This view will handle all books related REST services.
     """
-    # Basic Django authentication, you have to pass username nad password to access this api.
+    # Basic Django authentication, you have to pass username nad password to
+    # access this api.
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated,)
 
@@ -78,7 +80,7 @@ class BooksView(APIView):
         try:
             # Parsing the book data and checking for book entry
             book = request.data
-            books = Book.objects.filter(id=book['id'])[0]
+            books = Book.objects.filter(id=book['id'])
             if books:
                 book_m = books[0]
 
@@ -101,7 +103,8 @@ class BooksView(APIView):
                             else:
                                 book_m.genres.add(genre_m[0])
 
-                        del book['genres']  # genres are already updated so removing it.
+                        del book[
+                            'genres']  # genres are already updated so removing it.
                         Book.objects.filter(id=book['id']).update(**book)
             else:
                 # Error response in case of no book found
@@ -111,6 +114,7 @@ class BooksView(APIView):
         except Exception as e:
             ERROR_RESP['error']['message'] = e.message
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=ERROR_RESP)
+        book['genres'] = genres
         return Response(status=status.HTTP_200_OK, data=book)
 
     def get(self, request, id, format=None):

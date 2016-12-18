@@ -9,6 +9,7 @@ from book_app.utils.messages import USER_ALREADY_EXISTS, ERROR_RESP, USER_CREATE
 
 
 class CreateUserView(APIView):
+
     """
     The view will create User.
     """

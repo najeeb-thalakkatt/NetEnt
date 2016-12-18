@@ -6,6 +6,7 @@ from book_app.genre.model import Genre
 
 
 class Book(models.Model):
+
     """
     Book Model used for book table
     """
